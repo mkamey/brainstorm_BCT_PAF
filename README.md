@@ -32,17 +32,38 @@ beforeRemove.m -> afterRemove.m
   - delta, theta, alpha, beta, gammaとするそれぞれの帯域の周波数を記載する
   - 'mean'は何を表していますか？ 
 - espan
-  - 切り取るエポックの
-
+  - 切り取るエポックの秒数を記載
+- scoutfunc 
+  - https://neuroimage.usc.edu/brainstorm/Tutorials/Scouts#:~:text=Scout-,function,-We%20have%20extended
+  - scoutごとに複数の電流源がまとめられるが、そのまとめ方を指定する
+  - 1はmean, 3はPCA
+- isnorm
+  - minimum norm current amplitudesはダイポールの向きで正負がつく
+  - そのため、絶対値を返すかそのままソース値を返すかを選ぶ必要がある
+  - 0の場合、ファイルに保存されているソース値を返す
+  - 1の場合、絶対値（制約付き）または3つの方向のノルム（制約なし）を返す
+    - おそらく絶対値を返す？ 
+- scouts = 
+  - 使用する標本を選ぶ
+  - 'Desikan-Killiany'を当研究室では用いる
 ### 処理の中身
+1. matrixフォルダを作成する
+  - すでにあるmatrixフォルダは削除される
+2. 各subjectNameに以下の処理を行う
+  1. ファイルの読み込み
+  2. 指定した秒数ごとにepochを切り取る
+  3. 切り出したepochにタグをつける
+  4. head　modelを計算
+    - https://neuroimage.usc.edu/brainstorm/Tutorials/HeadModel
+  5. センサーノイズの推定（共分散行列）
+    - https://neuroimage.usc.edu/brainstorm/Tutorials/NoiseCovariance
+  6. 電流源推定
+  7. Scoutに当てはめ
+  8. Phase locking valueの計算?
+    - 
+  9. アーティファクトの除去？
+    - Snapshot: Sensors/MRI registration
+4. 保存
 
 
 
-% Ver2.0 (01-Dec-2021)
-mode = 'PLI'  % or 'DBWPLI'
-SubjectNames = {'01','02'};   % replace 01,02, ... to proper subject names
-sitindent = [n,m]             % identifier in file name ( from n-th character to m-th character, replace n and m to the number ). Not file type.
-bands = {'delta', '2, 4', 'mean'; 'theta', '4, 8', 'mean'; 'alpha', '8, 13', 'mean'; 'beta', '13, 30', 'mean'; 'gamma', '30, 60', 'mean'};
-espan = 5      % epoch time
-scoutfunc = 3  % 1:mean 3:PCA
-isnorm = 1     % 0:constrained 1:unconstrained
