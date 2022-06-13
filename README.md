@@ -65,5 +65,39 @@ beforeRemove.m -> afterRemove.m
     - Snapshot: Sensors/MRI registration
 4. 保存
 
-
+方法
+相馬先生が調整したデータを流用する
+サンプリング周波数2000Hzでレコーディング
+500Hzにダウンサンプリング
+60, 120, 180のnotch filter
+バンドパスフィルタで0.5Hz-200Hzまで抽出
+ICAでアーチファクトを除去
+復習：https://neuroimage.usc.edu/brainstorm/Tutorials/ArtifactsSsp
+モーションノイズについては目視で除去
+5秒間のepochに分割
+最低10セグメント/人となっている
+https://neuroimage.usc.edu/brainstorm/Tutorials/Epoching
+epochは5000ms以外でもやりましょうという提案が以前ありました
+まずは5000msでやってみてから考えましょうという話でした
+個々の周波数に分割
+フーリエ変換
+0.5Hzずつでスペクトル分解
+epochの長さにより分解能が異なるため、epochの長さを再検討していました
+https://neuroimage.usc.edu/brainstorm/Tutorials/TimeFrequency
+電流源推定を行い、脳領域ごとにグルーピングする（Scouts）
+アトラスの引用はデシカン？
+他に良い分け方がないか調べましょう、という話でした
+Peak alpha Frequencyを算出する
+ほか論文のMethodを参照して、目視で良いんじゃないかという話でした
+相談していたこと
+epochは5000msでいいか
+電流源推定を行いPAFを調べたいが、良いAltasはないか？
+先行研究があればそれを引用する
+先行研究を調べる
+先行研究がなくても、今回は電流源推定をした状態で解析をしたい
+PAFを目視で調べるときに、二峰性だったりピークなしの場合はどうするか
+PAFの先行研究を再度調べます（以前調べましたが紛失しました） （編集済み）
+23:59
+個人メモなので見にくいですが、
+相馬先生とMethodは途中まで同じで、電流源推定したあとの脳解剖アトラスを調べていました
 
